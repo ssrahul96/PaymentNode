@@ -1,0 +1,19 @@
+{
+  "name": "payment",
+  "version": "1.0.0",
+  "description": "simple payment app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ssrahul96/PaymentNode.git"
+  },
+  "author": "Rahul Somasundaram",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ssrahul96/PaymentNode/issues"
+  },
+  "homepage": "https://github.com/ssrahul96/PaymentNode#readme"
+}
