@@ -87,9 +87,14 @@ router.post('/paysave', function(req, res, next){
         var db = mongojs('mongodb://ssrahul96:hornet160@ds127888.mlab.com:27888/payment',['paydetails']);
         db.paydetails.save(paydet, function(err, paysave){
             if(err){
-                res.send(err);
+                res.json({
+                    "error": err
+                });
+            }else{
+                res.json({
+                    "status": "saved succesfully"
+                });
             }
-            res.json(paysave);
         });
     }
 });
