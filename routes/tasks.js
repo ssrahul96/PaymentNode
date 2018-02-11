@@ -47,7 +47,7 @@ router.get('/paydetails',function(req,res,next){
     }
 });
 
-//pay details
+//pay details by trans
 router.get('/paydetail/:name/:mode', function(req, res, next){
     var token = req.get("auth")
 
@@ -59,6 +59,26 @@ router.get('/paydetail/:name/:mode', function(req, res, next){
     }else{
         var db = mongojs('mongodb://ssrahul96:hornet160@ds127888.mlab.com:27888/payment',['paydetails']);
         db.paydetails.find({pname:req.params.name,ptype:req.params.mode}, function(err, paydetail){
+            if(err){
+                res.send(err);
+            }
+            res.json(paydetail);
+        });
+    }
+});
+
+//pay details without trans
+router.get('/paydetail/:name', function(req, res, next){
+    var token = req.get("auth")
+
+    if(token != 123456){
+        res.status(403);
+        res.json({
+            "error": "Unauthorised"
+        });
+    }else{
+        var db = mongojs('mongodb://ssrahul96:hornet160@ds127888.mlab.com:27888/payment',['paydetails']);
+        db.paydetails.find({pname:req.params.name}, function(err, paydetail){
             if(err){
                 res.send(err);
             }
