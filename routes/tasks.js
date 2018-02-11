@@ -24,6 +24,27 @@ router.get('/paydetail/:name/:mode', function(req, res, next){
     });
 });
 
+//Save Task
+router.post('/paysave', function(req, res, next){
+    var paydet = (req.body);
+    console.log(paydet.pname);
+
+
+    if(paydet.pname === "" || paydet.ptype === "" || paydet.pdesc === "" || paydet.pdate === "" || paydet.pamount === ""){
+        res.status(400);
+        res.json({
+            "error": "Bad Data"
+        });
+    }else{
+        db.paydetails.save(paydet, function(err, paysave){
+            if(err){
+                res.send(err);
+            }
+            res.json(paysave);
+        });
+    }
+});
+
 
 module.exports = router;
 
