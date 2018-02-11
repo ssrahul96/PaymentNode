@@ -87,6 +87,36 @@ router.get('/paydetail/:name', function(req, res, next){
     }
 });
 
+
+//invidual pending
+router.get('/pending/:name', function(req, res, next){
+    var token = req.get("auth")
+
+    if(token != 123456){
+        res.status(403);
+        res.json({
+            "error": "Unauthorised"
+        });
+    }else{
+        var db = mongojs('mongodb://ssrahul96:hornet160@ds127888.mlab.com:27888/payment',['paydetails']);
+        db.paydetails.find({pname:req.params.name}, function(err, paydetail){
+            if(err){
+                res.send(err);
+            }
+            var final_amount=0;
+            for(var detail of paydetail){
+                if(detail.ptype === 'cr'){
+                    final_amount = parseInt(final_amount) + parseInt(detail.pamount);
+                }else{
+                    final_amount = parseInt(final_amount) - parseInt(detail.pamount);
+                }
+            }
+            console.log(final_amount);
+            res.json({"pname":paydetail[0].pname,"amount" : final_amount});
+        });
+    }
+});
+
 //Save Task
 router.post('/paysave', function(req, res, next){
     var paydet = (req.body);
