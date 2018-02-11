@@ -89,7 +89,7 @@ router.get('/paydetail/:name', function(req, res, next){
 
 
 //invidual pending
-router.get('/pending/:name', function(req, res, next){
+router.get('/getpaydetail/:name', function(req, res, next){
     var token = req.get("auth")
 
     if(token != 123456){
