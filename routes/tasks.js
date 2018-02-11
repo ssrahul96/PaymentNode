@@ -112,7 +112,7 @@ router.get('/getpaydetail/:name', function(req, res, next){
                 }
             }
             console.log(final_amount);
-            res.json({"pname":paydetail[0].pname,"amount" : final_amount});
+            res.json({"pname":req.params.name,"amount" : final_amount});
         });
     }
 });
