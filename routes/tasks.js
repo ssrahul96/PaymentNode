@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongojs = require('mongojs');
-
+var comfun = require('./commonfunctions');
 
 
 //all users
@@ -146,6 +146,32 @@ router.post('/paysave', function(req, res, next){
                 });
             }
         });
+    }
+});
+
+router.get('/getauthkey',function(req,res,next){
+    var token = req.get("auth")
+    console.log(token);
+    if(token != 123456){
+        res.status(403);
+        res.json({
+            "error": "Unauthorised"
+        });
+    }else{
+        res.json({"key":comfun.getauthkey('Rahul')});
+    }
+});
+
+router.get('/key',function(req,res,next){
+    var token = req.get("auth")
+    console.log(token);
+    if(token != 123456){
+        res.status(403);
+        res.json({
+            "error": "Unauthorised"
+        });
+    }else{
+        res.json({"KEY": process.env.AES_KEY, "IV" :process.env.AED_IV});
     }
 });
 
