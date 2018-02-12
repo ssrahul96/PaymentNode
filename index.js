@@ -9,7 +9,7 @@ var port = 3000;
 
 var app = express();
 
-app.set('port', (process.env.PORT || port));
+app.set('port', (process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || port));
 //View Engine
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
