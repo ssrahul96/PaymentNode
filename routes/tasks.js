@@ -175,6 +175,32 @@ router.get('/key',function(req,res,next){
     }
 });
 
+router.get('/encrypt/:val',function(req,res,next){
+    var token = req.get("auth")
+    console.log(token);
+    if(token != 123456){
+        res.status(403);
+        res.json({
+            "error": "Unauthorised"
+        });
+    }else{
+        res.json({"IV":comfun.encrypt(req.params.val)});
+    }
+});
+
+router.get('/decrypt/:val',function(req,res,next){
+    var token = req.get("auth")
+    console.log(token);
+    if(token != 123456){
+        res.status(403);
+        res.json({
+            "error": "Unauthorised"
+        });
+    }else{
+        res.json({"IV":comfun.decrypt(req.params.val)});
+    }
+});
+
 
 module.exports = router;
 
