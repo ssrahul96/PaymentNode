@@ -2,29 +2,25 @@ var md5 = require('md5');
 var express = require('express');
 var aesjs = require('aes-js');
 
-var key1 = process.env.AES_KEY ;
-var iv1 = process.env.AED_IV ;
-var key =  new Buffer(key1);
-var iv= new Buffer(iv1);
+var key = process.env.AES_KEY || 'B374A26A71490437AA024E4FADD5B848';
+var iv = process.env.AED_IV || '7E892875A52C34A3';
+var dbPass = process.env.DB_PASS || 'hornet160'
+var authtoken = process.env.AUTH_TOKEN || 'ssrahul961234567'
 module.exports = {
-    add: function (a,b) {
-      return parseInt(a)+b;
-    },
-    bar: function (a,b) {
-      return a*b;
-    },
-    getauthkey : function(name){
-      return md5(name).toUpperCase();
+    getAuthToken : function(){
+      return this.encrypt(authtoken);
     },
     encrypt : function(pt){
       var textBytes = aesjs.utils.utf8.toBytes(pt);
-      var aesCbc = new aesjs.ModeOfOperation.cbc(key, iv);
+      var aesCbc = new aesjs.ModeOfOperation.cbc(new Buffer(key), new Buffer(iv));
       return aesjs.utils.hex.fromBytes(aesCbc.encrypt(textBytes));
     },
     decrypt : function(et){
       var encryptedBytes = aesjs.utils.hex.toBytes(et);
-      var aesCbc = new aesjs.ModeOfOperation.cbc(key, iv);
-      var decryptedBytes = aesCbc.decrypt(encryptedBytes);
-      return  aesjs.utils.utf8.fromBytes(decryptedBytes);
-    } 
+      var aesCbc = new aesjs.ModeOfOperation.cbc(new Buffer(key), new Buffer(iv));
+      return  aesjs.utils.utf8.fromBytes(aesCbc.decrypt(encryptedBytes));
+    } ,
+    getDBConString : function(){
+      return 'mongodb://ssrahul96:'+dbPass+'@ds127888.mlab.com:27888/payment';
+    }
   };

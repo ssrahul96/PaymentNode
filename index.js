@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var tasks = require('./routes/tasks');
+var auth = require('./routes/auth');
 
 var port = 3000;
 
@@ -24,6 +25,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 app.use('/', index);
 app.use('/api', tasks);
+app.use('/auth', auth);
 
 app.listen(app.get('port'), function() {
     console.log('Node app is running on port', app.get('port'));

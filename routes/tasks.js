@@ -6,15 +6,14 @@ var comfun = require('./commonfunctions');
 
 //all users
 router.get('/users',function(req,res,next){
-    var token = req.get("auth")
-    console.log(token);
-    if(token != 123456){
+    var token = req.get("AuthToken");
+    if(token != comfun.getAuthToken()){
         res.status(403);
         res.json({
             "error": "Unauthorised"
         });
     }else{
-        var db = mongojs('mongodb://ssrahul96:hornet160@ds127888.mlab.com:27888/payment',['users']);
+        var db = mongojs(comfun.getDBConString(),['users']);
         db.users.find(function(err,users){
             console.log(db);
             if(err){
@@ -28,15 +27,14 @@ router.get('/users',function(req,res,next){
 
 //all paydetails
 router.get('/paydetails',function(req,res,next){
-    var token = req.get("auth")
-    console.log(token);
+    var token = req.get("auth");
     if(token != 123456){
         res.status(403);
         res.json({
             "error": "Unauthorised"
         });
     }else{
-        var db = mongojs('mongodb://ssrahul96:hornet160@ds127888.mlab.com:27888/payment',['paydetails']);
+        var db = mongojs(comfun.getDBConString(),['paydetails']);
         db.paydetails.find(function(err,paydetails){
             console.log(db);
             if(err){
@@ -49,15 +47,14 @@ router.get('/paydetails',function(req,res,next){
 
 //pay details by trans
 router.get('/paydetail/:name/:mode', function(req, res, next){
-    var token = req.get("auth")
-
+    var token = req.get("auth");
     if(token != 123456){
         res.status(403);
         res.json({
             "error": "Unauthorised"
         });
     }else{
-        var db = mongojs('mongodb://ssrahul96:hornet160@ds127888.mlab.com:27888/payment',['paydetails']);
+        var db = mongojs(comfun.getDBConString(),['paydetails']);
         db.paydetails.find({pname:req.params.name,ptype:req.params.mode}, function(err, paydetail){
             if(err){
                 res.send(err);
@@ -69,15 +66,14 @@ router.get('/paydetail/:name/:mode', function(req, res, next){
 
 //pay details without trans
 router.get('/paydetail/:name', function(req, res, next){
-    var token = req.get("auth")
-
+    var token = req.get("auth");
     if(token != 123456){
         res.status(403);
         res.json({
             "error": "Unauthorised"
         });
     }else{
-        var db = mongojs('mongodb://ssrahul96:hornet160@ds127888.mlab.com:27888/payment',['paydetails']);
+        var db = mongojs(comfun.getDBConString(),['paydetails']);
         db.paydetails.find({pname:req.params.name}, function(err, paydetail){
             if(err){
                 res.send(err);
@@ -90,15 +86,14 @@ router.get('/paydetail/:name', function(req, res, next){
 
 //invidual pending
 router.get('/getpaydetail/:name', function(req, res, next){
-    var token = req.get("auth")
-
+    var token = req.get("auth");
     if(token != 123456){
         res.status(403);
         res.json({
             "error": "Unauthorised"
         });
     }else{
-        var db = mongojs('mongodb://ssrahul96:hornet160@ds127888.mlab.com:27888/payment',['paydetails']);
+        var db = mongojs(comfun.getDBConString(),['paydetails']);
         db.paydetails.find({pname:req.params.name}, function(err, paydetail){
             if(err){
                 res.send(err);
@@ -121,7 +116,6 @@ router.get('/getpaydetail/:name', function(req, res, next){
 router.post('/paysave', function(req, res, next){
     var paydet = (req.body);
     var token = req.get("auth")
-
     if(token != 123456){
         res.status(403);
         res.json({
@@ -134,7 +128,7 @@ router.post('/paysave', function(req, res, next){
             "error": "Bad Data"
         });
     }else{
-        var db = mongojs('mongodb://ssrahul96:hornet160@ds127888.mlab.com:27888/payment',['paydetails']);
+        var db = mongojs(comfun.getDBConString(),['paydetails']);
         db.paydetails.save(paydet, function(err, paysave){
             if(err){
                 res.json({
@@ -148,59 +142,6 @@ router.post('/paysave', function(req, res, next){
         });
     }
 });
-
-router.get('/getauthkey',function(req,res,next){
-    var token = req.get("auth")
-    console.log(token);
-    if(token != 123456){
-        res.status(403);
-        res.json({
-            "error": "Unauthorised"
-        });
-    }else{
-        res.json({"key":comfun.getauthkey('Rahul')});
-    }
-});
-
-router.get('/key',function(req,res,next){
-    var token = req.get("auth")
-    console.log(token);
-    if(token != 123456){
-        res.status(403);
-        res.json({
-            "error": "Unauthorised"
-        });
-    }else{
-        res.json({"KEY": process.env.AES_KEY, "IV" :process.env.AED_IV});
-    }
-});
-
-router.get('/encrypt/:val',function(req,res,next){
-    var token = req.get("auth")
-    console.log(token);
-    if(token != 123456){
-        res.status(403);
-        res.json({
-            "error": "Unauthorised"
-        });
-    }else{
-        res.json({"IV":comfun.encrypt(req.params.val)});
-    }
-});
-
-router.get('/decrypt/:val',function(req,res,next){
-    var token = req.get("auth")
-    console.log(token);
-    if(token != 123456){
-        res.status(403);
-        res.json({
-            "error": "Unauthorised"
-        });
-    }else{
-        res.json({"IV":comfun.decrypt(req.params.val)});
-    }
-});
-
 
 module.exports = router;
 
