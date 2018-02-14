@@ -7,10 +7,11 @@ var tasks = require('./routes/tasks');
 var auth = require('./routes/auth');
 
 var port = 3000;
-
+var ip = '127.0.0.1'
 var app = express();
 
 app.set('port', (process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || port));
+app.set('ip', (process.env.IP || process.env.OPENSHIFT_NODEJS_IP || ip));
 //View Engine
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -29,6 +30,6 @@ app.use('/', index);
 app.use('/api', tasks);
 app.use('/auth', auth);
 
-app.listen(app.get('port'), function () {
-    console.log('Node app is running on port', app.get('port'));
+app.listen(app.get('port'), app.get('ip'), function () {
+    console.log('Node app is running on ' + app.get('ip') + ':' + app.get('port'));
 });
