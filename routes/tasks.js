@@ -7,10 +7,19 @@ var comfun = require('./commonfunctions');
 //all users
 router.get('/users', function (req, res, next) {
     var token = req.get("AuthToken");
-    if (token != comfun.getAuthToken()) {
+    if(typeof token === 'undefined'){
         res.status(403);
         res.json({
             "error": "Unauthorised"
+        });
+    }
+    console.log(token);
+    var sts = comfun.checkAuthToken(token);   
+    console.log(sts) ;
+    if (!sts) {
+        res.status(401);
+        res.json({
+            "error": "Key Expired"
         });
     } else {
         var db = mongojs(comfun.getDBConString(), ['users']);
