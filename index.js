@@ -29,7 +29,12 @@ app.use(bodyParser.urlencoded({
 app.use('/', index);
 app.use('/api', tasks);
 app.use('/auth', auth);
-
-app.listen(app.get('port'), app.get('ip'), function () {
-    console.log('Node app is running on ' + app.get('ip') + ':' + app.get('port'));
-});
+if (typeof process.env.IP === 'undefined' || typeof process.env.OPENSHIFT_NODEJS_IP === 'undefined') {
+    app.listen(app.get('port'), function () {
+        console.log('Node app is running on port ' + app.get('port'));
+    });
+} else {
+    app.listen(app.get('port'), app.get('ip'), function () {
+        console.log('Node app is running on ' + app.get('ip') + ':' + app.get('port'));
+    });
+}
