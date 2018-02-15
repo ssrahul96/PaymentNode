@@ -29,7 +29,11 @@ app.use(bodyParser.urlencoded({
 app.use('/', index);
 app.use('/api', tasks);
 app.use('/auth', auth);
-if (typeof process.env.IP === 'undefined' || typeof process.env.OPENSHIFT_NODEJS_IP === 'undefined') {
+if (typeof process.env.IP != 'undefined') {
+    app.listen(app.get('port'), function () {
+        console.log('Node app is running on port ' + app.get('port'));
+    });
+} else if (typeof process.env.OPENSHIFT_NODEJS_IP != 'undefined') {
     app.listen(app.get('port'), function () {
         console.log('Node app is running on port ' + app.get('port'));
     });
