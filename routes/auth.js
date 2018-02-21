@@ -33,7 +33,6 @@ router.get('/decrypt/:val', function (req, res, next) {
 router.get('/getauthtoken/:sk', function (req, res, next) {
     var skey = req.params.sk;
     var timestamp = Math.floor(Date.now() / 1000);
-    console.log(timestamp);
     var authstring = req.params.sk + timestamp;
     console.log(authstring.length);
     if (skey === 'srahul') {

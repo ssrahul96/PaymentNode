@@ -32,7 +32,10 @@ module.exports = {
     var aesCbc = new aesjs.ModeOfOperation.cbc(new Buffer(key), new Buffer(iv));
     return aesjs.utils.utf8.fromBytes(aesCbc.decrypt(encryptedBytes));
   },
-  getDBConString: function () {
+  getMD5 : function(pt) {
+    return md5(pt).toUpperCase();
+  },
+  getDBConString : function () {
     return 'mongodb://ssrahul96:' + dbPass + '@ds127888.mlab.com:27888/payment';
   }
 };

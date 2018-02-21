@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var tasks = require('./routes/tasks');
 var auth = require('./routes/auth');
+var user = require('./routes/user');
 
 var port = 3000;
 var app = express();
@@ -22,12 +23,14 @@ app.use(express.static(path.join(__dirname, 'client')));
 // Body Parser MW
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-    extended: false
+    extended: true
 }));
 
 app.use('/', index);
 app.use('/api', tasks);
 app.use('/auth', auth);
+app.use('/user', user);
+
 if (typeof process.env.IP != 'undefined') {
     app.listen(app.get('port'), app.get('ip'), function () {
         console.log('1 Node app is running on ' + app.get('ip') + ':' + app.get('port'));
