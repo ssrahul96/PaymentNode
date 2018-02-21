@@ -12,19 +12,19 @@ router.get('/', function (req, res, next) {
 
 router.post('/signup', function (req, res, next) {
     var userdet = (req.body);
-    //console.log(userdet);
     var token = req.get("auth")
     if (token != 123456) {
         res.status(403);
         res.json({
-            "error": "Unauthorised"
+            "status": "failed",
+            "description": "Unauthorised"
         });
     }
     var db = mongojs(comfun.getDBConString(), ['ssrahul96']);
     db.ssrahul96.findOne({
-        uname: userdet.uname
+        uid: userdet.uid
     }, {
-        uname: 1,
+        uid: 1,
         _id: 0
     }, function (err, user) {
         if (err) {
@@ -51,7 +51,49 @@ router.post('/signup', function (req, res, next) {
         } else {
             res.json({
                 "status": "failed",
-                "description": userdet.uname + " already exists"
+                "description": userdet.uid + " already exists"
+            });
+        }
+    });
+});
+
+router.post('/signin',function(req,res,next){
+    var userdet = req.body;
+    var token = req.get("auth")
+    if (token != 123456) {
+        res.status(403);
+        res.json({
+            "status": "failed",
+            "description": "Unauthorised"
+        });
+    }
+    var db = mongojs(comfun.getDBConString(), ['ssrahul96']);
+    db.ssrahul96.findOne({
+        uid: userdet.uid,
+        password: userdet.password
+    }, {
+        uname: 1,
+        uid:1,
+        mobile:1,
+        email:1,
+        _id: 1
+    }, function (err, user) {
+        if (err) {
+            res.json({
+                "status": "error",
+                "description": err
+            });
+        }
+        if (user !== null) {
+            res.json({
+                "status": "success",
+                "authey" : comfun.encrypt(user._id.toString()),
+                "details" : user                
+            })
+        } else {
+            res.json({
+                "status": "failed",
+                "description": "username or password mismatch"
             });
         }
     });

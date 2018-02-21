@@ -18,11 +18,10 @@
   },
   "homepage": "https://github.com/ssrahul96/PaymentNode#readme",
   "dependencies": {
-    "aes-js": "^3.1.0",
     "body-parser": "^1.18.2",
+    "crypto-js": "^3.1.9-1",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
-    "md5": "^2.2.1",
     "mongojs": "^2.5.0"
   }
 }
