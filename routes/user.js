@@ -12,14 +12,6 @@ router.get('/', function (req, res, next) {
 
 router.post('/signup', function (req, res, next) {
     var userdet = (req.body);
-    var token = req.get("auth")
-    if (token != 123456) {
-        res.status(403);
-        res.json({
-            "status": "failed",
-            "description": "Unauthorised"
-        });
-    }
     var db = mongojs(comfun.getDBConString(), ['ssrahul96']);
     db.ssrahul96.findOne({
         uid: userdet.uid
@@ -59,14 +51,6 @@ router.post('/signup', function (req, res, next) {
 
 router.post('/signin',function(req,res,next){
     var userdet = req.body;
-    var token = req.get("auth")
-    if (token != 123456) {
-        res.status(403);
-        res.json({
-            "status": "failed",
-            "description": "Unauthorised"
-        });
-    }
     var db = mongojs(comfun.getDBConString(), ['ssrahul96']);
     db.ssrahul96.findOne({
         uid: userdet.uid,

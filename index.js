@@ -6,6 +6,7 @@ var index = require('./routes/index');
 var tasks = require('./routes/tasks');
 var auth = require('./routes/auth');
 var user = require('./routes/user');
+var api = require('./routes/api');
 
 var port = 3000;
 var app = express();
@@ -27,9 +28,10 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use('/', index);
-app.use('/api', tasks);
+app.use('/api1', tasks);
 app.use('/auth', auth);
 app.use('/user', user);
+app.use('/api', api);
 
 if (typeof process.env.IP != 'undefined') {
     app.listen(app.get('port'), app.get('ip'), function () {
