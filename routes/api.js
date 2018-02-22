@@ -10,17 +10,42 @@ router.get('/', function (req, res, next) {
     })
 });
 
-router.put("/savetrans/:uid", function (req, res, next) {
+router.put("/savetrans/:requid", function (req, res, next) {
     var param = req.body;
-    var uid = req.params.uid;
+    var requid = req.params.requid;
     var token = req.get("auth");
-    comfun.checkToken(uid, token, function (resp) {
-        console.log(sts)
+    console.log(param);
+    comfun.checkToken(requid, token, function (resp) {
         if (resp.sts) {
-            res.json({
-                "status": "success",
-                "description": "authorised"
+            var db = mongojs(comfun.getDBConString(), ['ssrahul96']);
+            // db.ssrahul96.findAndModify({
+            //     query: {
+            //         uid: requid
+            //     },
+            //     update: {
+            //         $set: {
+            //             'pending': param
+            //         }
+            //     },
+            //     new: true
+            // }, function (err, doc, lastErrorObject) {
+            //     res.json({
+            //         "status": "success",
+            //         "description": "saved"
+            //     });
+            // })
+            db.ssrahul96.find({
+                "pending.paid": {$eq: false}
+            }, {
+                "pending": 1,
+                _id: 0
+            }, function (err, ssrahul96) {
+                if (err) {
+                    res.send(err);
+                }
+                res.json(ssrahul96);
             });
+
         } else {
             res.status(403);
             res.json({
