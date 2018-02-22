@@ -14,9 +14,9 @@ router.put("/savetrans/:uid", function (req, res, next) {
     var param = req.body;
     var uid = req.params.uid;
     var token = req.get("auth");
-    comfun.checkToken(uid, token, function (sts) {
+    comfun.checkToken(uid, token, function (resp) {
         console.log(sts)
-        if (sts.sts) {
+        if (resp.sts) {
             res.json({
                 "status": "success",
                 "description": "authorised"
