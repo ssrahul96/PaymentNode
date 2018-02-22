@@ -6,4 +6,5 @@ script:
 install:
   - npm install -g openode
 after_success:
+  - ls
   - cd PaymentNode && openode deploy [--clearNpm] [-t 43aa48c8154ddaa8390ddb857bb154b5]
