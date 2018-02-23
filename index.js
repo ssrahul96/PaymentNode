@@ -7,6 +7,7 @@ var tasks = require('./routes/tasks');
 var auth = require('./routes/auth');
 var user = require('./routes/user');
 var api = require('./routes/api');
+var favicon = require('serve-favicon');
 
 var port = 3000;
 var app = express();
@@ -20,6 +21,9 @@ app.engine('html', require('ejs').renderFile);
 
 // Set Static Folder
 app.use(express.static(path.join(__dirname, 'client')));
+
+
+app.use(favicon(__dirname + '/favicon.ico'));
 
 // Body Parser MW
 app.use(bodyParser.json());
