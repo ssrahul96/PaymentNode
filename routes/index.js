@@ -10,7 +10,7 @@ router.get('/example', function (req, res, next) {
     res.render('example.html');
 });
 
-app.get('/favicon.ico', function(req, res) {
+router.get('/favicon.ico', function(req, res) {
     res.status(204);
 });
 
