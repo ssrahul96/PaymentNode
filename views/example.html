@@ -1,0 +1,93 @@
+<!Doctype <!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Payment app</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script> -->
+</head>
+
+<body>
+    <h1>/user/signup</h1>
+    <h4>Method : POST</h4>
+    <h4>Request</h4>
+    <p>
+        <i> { "uname": "Rahul Somasundaram", "uid": "ssrahul96", "password": "dec68e4501ce09a74284cb1bd03164a2", "mobile": 8489888434,
+            "email": "ssrahul96@gmail.com" }</i>
+        <br> ( password in MD5 )
+    </p>
+    <h4>Response</h4>
+    <p>
+        <i>{ "status": "success", "description": "saved succesfully" } </i>
+    </p>
+
+    <h1>/user/signin</h1>
+    <h4>Method : POST</h4>
+    <h4>Request</h4>
+    <p>
+        <i> { "uid": "ssrahul96", "password": "dec68e4501ce09a74284cb1bd03164a2" } </i>
+        <br>( password in MD5 )
+    </p>
+    <h4>Response</h4>
+    <p>
+        <i>{ "status": "success", "authey": "d02dd153fe40f91f5ec71bb9f0e7b5f247ca8a405532025ca7f08ecd0285f966", "details": {
+            "_id": "5a904a08ee0c1c2514547199", "uname": "Rahul Somasundaram", "uid": "ssrahul96", "mobile": 8489888434, "email":
+            "ssrahul96@gmail.com" } } </i>
+        <br> ( authkey is used for all other transactions )
+    </p>
+
+    <h1>/api/newtrans/(uid)</h1>
+    <h4>Method : PUT</h4>
+    <h4>Header</h4>
+    <p>
+        <i> auth : authkey </i>
+    </p>
+    <h4>Request</h4>
+    <p>
+        <i> { "description": "aasifee", "timestamp": 1519405786, "amount": 400, "paid": false } </i>
+    </p>
+    <h4>Response</h4>
+    <p>
+        <i>{ "_id": "5a904a08ee0c1c2514547199", "uname": "Rahul Somasundaram", "uid": "ssrahul96", "password": "dec68e4501ce09a74284cb1bd03164a2",
+            "mobile": 8489888434, "email": "ssrahul96@gmail.com", "pending": [ { "description": "aasifee", "timestamp": 1519405786,
+            "amount": 400, "paid": false } ] } </i>
+
+    </p>
+
+    <h1>/api/getpending/(uid)</h1>
+    <h4>Method : GET</h4>
+    <h4>Header</h4>
+    <p>
+        <i> auth : authkey </i>
+    </p>
+    <h4>Response</h4>
+    <p>
+        <i>[ { "description": "Zaitoon", "timestamp": 1519405770, "amount": 300, "paid": false }, { "description": "aasifee",
+            "timestamp": 1519405786, "amount": 400, "paid": false } ] </i>
+
+    </p>
+    <h1>/api/updatetrans/(uid)</h1>
+    <h4>Method : PUT</h4>
+    <h4>Header</h4>
+    <p>
+        <i> auth : authkey </i>
+    </p>
+    <h4>Request</h4>
+    <p>
+        <i> { "description": "Zaitoon", "timestamp": 1519405770, "amount": 300, "paid": true } </i>
+    </p>
+    <h4>Response</h4>
+    <p>
+        <i>{ "_id": "5a904a08ee0c1c2514547199", "uname": "Rahul Somasundaram", "uid": "ssrahul96", "password": "dec68e4501ce09a74284cb1bd03164a2",
+            "mobile": 8489888434, "email": "ssrahul96@gmail.com", "pending": [ { "description": "Star", "timestamp": 1519405752,
+            "amount": 200, "paid": true }, { "description": "Zaitoon", "timestamp": 1519405770, "amount": 300, "paid": true
+            }, { "description": "aasifee", "timestamp": 1519405786, "amount": 400, "paid": false } ] } </i>
+
+    </p>
+
+</body>
+
+</html>
