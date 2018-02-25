@@ -5,4 +5,6 @@ script:
   - npm install -g openode
   - echo "Deploying!"
 after_success:
+  - rm index.js
+  - mv index1.js index.js
   - openode deploy --clearNpm -t 43aa48c8154ddaa8390ddb857bb154b5 -s ssrahul96
