@@ -1,6 +1,7 @@
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
+const http = require('http');
 
 var index = require('./routes/index');
 var tasks = require('./routes/tasks');
@@ -37,6 +38,7 @@ app.use('/auth', auth);
 app.use('/user', user);
 app.use('/api', api);
 
+/*
 if (typeof process.env.IP != 'undefined') {
     app.listen(app.get('port'), app.get('ip'), function () {
         console.log('1 Node app is running on ' + app.get('ip') + ':' + app.get('port'));
@@ -50,3 +52,7 @@ if (typeof process.env.IP != 'undefined') {
         console.log('3 Node app is running on port ' + app.get('port'));
     });
 }
+*/
+http.createServer(app).listen(port,function(){
+    console.log('Node app is running on port ' + port);
+});
