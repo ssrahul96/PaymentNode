@@ -45,7 +45,7 @@ router.get("/getpending/:requid", function (req, res, next) {
     })
 });
 
-router.put("/newtrans/:requid", function (req, res, next) {
+router.post("/newtrans/:requid", function (req, res, next) {
     var param = req.body;
     var requid = req.params.requid;
     var token = req.get("auth");
@@ -88,7 +88,7 @@ router.put("/newtrans/:requid", function (req, res, next) {
 });
 
 
-router.put("/updatetrans/:requid", function (req, res, next) {
+router.post("/updatetrans/:requid", function (req, res, next) {
     var param = req.body;
     var requid = req.params.requid;
     var token = req.get("auth");
@@ -121,6 +121,79 @@ router.put("/updatetrans/:requid", function (req, res, next) {
                 })
 
                 
+            });
+
+        } else {
+            res.status(403);
+            res.json({
+                "status": "error",
+                "description": sts.desc
+            });
+        }
+    })
+});
+
+router.post("/getusers/:requid", function (req, res, next) {
+    var param = req.body;
+    var requid = req.params.requid;
+    var token = req.get("auth");
+    //console.log(param);
+    comfun.checkToken(requid, token, function (resp) {
+        if (resp.sts) {
+            var db = mongojs(comfun.getDBConString(), ['ssrahul96']);
+            db.ssrahul96.find({
+                "uid": {
+                    $eq: requid
+                }
+            }, function (err, ssrahul96) {
+                if (err) {
+                    res.send(err);
+                }
+                var users = [];
+                for (var count in ssrahul96[0]['users']) {
+                    users.push(ssrahul96[0]['users'][count]);
+                }
+                res.send(users);
+            });
+
+        } else {
+            res.status(403);
+            res.json({
+                "status": "error",
+                "description": sts.desc
+            });
+        }
+    })
+});
+
+router.post("/postuser/:requid", function (req, res, next) {
+    var param = req.body;
+    var requid = req.params.requid;
+    var token = req.get("auth");
+    comfun.checkToken(requid, token, function (resp) {
+        if (resp.sts) {
+            var db = mongojs(comfun.getDBConString(), ['ssrahul96']);
+            db.ssrahul96.find({
+                "uid": {
+                    $eq: requid
+                }
+            }, function (err, ssrahul96) {
+                if (err) {
+                    res.send(err);
+                }
+                var users = [];
+                for (var count in ssrahul96[0]['users']) {
+                    users.push(ssrahul96[0]['users'][count]);
+                }
+                users.push(param);
+
+                db.ssrahul96.findAndModify({
+                    query: { uid: requid },
+                    update: { $set: { 'users': users } },
+                    new: true
+                }, function (err, doc, lastErrorObject) {
+                    res.json(doc);
+                })                
             });
 
         } else {

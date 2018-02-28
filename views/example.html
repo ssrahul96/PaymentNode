@@ -40,7 +40,7 @@
     </p>
 
     <h1>/api/newtrans/(uid)</h1>
-    <h4>Method : PUT</h4>
+    <h4>Method :POST</h4>
     <h4>Header</h4>
     <p>
         <i> auth : authkey </i>
@@ -70,7 +70,7 @@
 
     </p>
     <h1>/api/updatetrans/(uid)</h1>
-    <h4>Method : PUT</h4>
+    <h4>Method : POST</h4>
     <h4>Header</h4>
     <p>
         <i> auth : authkey </i>
@@ -86,6 +86,37 @@
             "amount": 200, "paid": true }, { "description": "Zaitoon", "timestamp": 1519405770, "amount": 300, "paid": true
             }, { "description": "aasifee", "timestamp": 1519405786, "amount": 400, "paid": false } ] } </i>
 
+    </p>
+
+    <h1>/api/getusers/(uid)</h1>
+    <h4>Method : GET</h4>
+    <h4>Header</h4>
+    <p>
+        <i> auth : authkey </i>
+    </p>
+    <h4>Response</h4>
+    <p>
+        <i>[ { "uid": "ajay", "mobile": "987654321" }, { "uid": "aravind", "mobile": "12345678" }] </i>
+    </p>
+
+    <h1>/api/postuser/(uid)</h1>
+    <h4>Method : POST</h4>
+    <h4>Header</h4>
+    <p>
+        <i> auth : authkey </i>
+    </p>
+    <h4>Request</h4>
+    <p>
+        <i> { "uid": "bharat", "mobile": "12345" } </i>
+    </p>
+    <h4>Response</h4>
+    <p>
+        <i>{ "_id": "5a8db34c7ce53719706f86b3", "uname": "Rahul Somasundaram", "uid": "ssrahul96", "password": "e113ccd32d3b88da2a373fc47b7e28ef",
+            "mobile": 8489888434, "email": "ssrahul96@gmail.com", "users": [ { "uid": "ajay", "mobile": "987654321" }, {
+            "uid": "aravind", "mobile": "12345678" }, { "uid": "bharat", "mobile": "12345" } ], "pending": [ { "description":
+            "Zaitoon", "timestamp": 1519315234, "amount": 500, "paid": true }, { "description": "Zaitoon", "timestamp": 1519315234,
+            "amount": 400, "paid": false }, { "description": "Zaitoon", "timestamp": 1519315234, "amount": 300, "paid": false
+            }, { "description": "Star", "timestamp": 1519404459, "amount": 200, "paid": false } ] } </i>
     </p>
 
 </body>
