@@ -71,7 +71,7 @@ router.post('/signin',function(req,res,next){
         if (user !== null) {
             res.json({
                 "status": "success",
-                "authey" : comfun.encrypt(user._id.toString()),
+                "authkey" : comfun.encrypt(user._id.toString()),
                 "details" : user                
             })
         } else {
