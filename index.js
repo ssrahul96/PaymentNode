@@ -7,6 +7,7 @@ var tasks = require('./routes/tasks');
 var auth = require('./routes/auth');
 var user = require('./routes/user');
 var api = require('./routes/api');
+var firebase = require('./routes/firebase');
 var favicon = require('serve-favicon');
 
 var port = 3000;
@@ -36,6 +37,7 @@ app.use('/api1', tasks);
 app.use('/auth', auth);
 app.use('/user', user);
 app.use('/api', api);
+app.use('/firebase', firebase);
 
 if (typeof process.env.IP != 'undefined') {
     app.listen(app.get('port'), app.get('ip'), function () {
